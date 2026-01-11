@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsUp Web (Prototype)</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b141a;
+      display: flex;
+      height: 100vh;
+      color: #e9edef;
+    }
+    .sidebar {
+      width: 30%;
+      background: #111b21;
+      border-right: 1px solid #2a3942;
+      overflow-y: auto;
+    }
+    .header {
+      padding: 15px;
+      background: #202c33;
+      font-weight: bold;
+    }
+    .chat-item {
+      padding: 15px;
+      border-bottom: 1px solid #2a3942;
+      cursor: pointer;
+    }
+    .chat-item:hover {
+      background: #2a3942;
+    }
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #0b141a;
+    }
+    .chat-header {
+      padding: 15px;
+      background: #202c33;
+      border-bottom: 1px solid #2a3942;
+    }
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #0b141a;
+    }
+    .msg {
+      max-width: 60%;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .sent {
+      background: #005c4b;
+      margin-left: auto;
+    }
+    .received {
+      background: #202c33;
+      margin-right: auto;
+    }
+    .footer {
+      padding: 10px;
+      background: #202c33;
+      color: #8696a0;
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="header">WhatsUp Web (Fake)</div>
+    <div class="chat-item" onclick="loadChat('aisha')">Aisha</div>
+    <div class="chat-item" onclick="loadChat('bhavna')">Bhavna</div>
+    <div class="chat-item" onclick="loadChat('chem')">Ms. Chemistry</div>
+    <div class="chat-item" onclick="loadChat('smith')">Ms. Smith</div>
+    <div class="chat-item" onclick="loadChat('emma')">Emma</div>
+    <div class="chat-item" onclick="loadChat('sam')">Samantha</div>
+  </div>  <div class="chat-area">
+    <div class="chat-header" id="chatName">Select a chat</div>
+    <div class="messages" id="messages"></div>
+    <div class="footer">Prototype for Cipher Analysis • Not real WhatsApp</div>
+  </div>  <script>
+    const chats = {
+      aisha: {
+        name: 'Aisha',
+        msgs: [
+          {t:'Khoor Zxqplng! 😊', s:false},
+          {t:'Khoor, vxhw qghu?', s:false},
+          {t:'Lq lw wuuhg', s:true},
+          {t:'Oh, vhuuhg lv grhq', s:false}
+        ]
+      },
+      bhavna: {
+        name: 'Bhavna',
+        msgs: [
+          {t:'Wkhoor, Pdop!', s:false},
+          {t:'Pdop, dqvwv lw!', s:false},
+          {t:'Grjq lw', s:true},
+          {t:'Yh, grhq!', s:false}
+        ]
+      },
+      chem: {
+        name: 'Ms. Chemistry',
+        msgs: [
+          {t:'Hey, Vfz 7 pm?', s:false},
+          {t:'Vfz lv grpe!', s:false},
+          {t:'Hwæt lv lw', s:true},
+          {t:'Grpe, grpe!', s:false}
+        ]
+      },
+      smith: {
+        name: 'Ms. Smith',
+        msgs: [
+          {t:'Gv vrwt rzro 4 pm 🍰', s:false},
+          {t:'R lwph lv grhq', s:false},
+          {t:'Gv zl hqg?', s:true},
+          {t:'R wrhw 7 pm', s:false},
+          {t:'Gv zl abc', s:true},
+          {t:'R wrhw xyz', s:false}
+        ]
+      },
+      emma: {
+        name: 'Emma',
+        msgs: [
+          {t:'Hwæt, Hwæt?', s:false},
+          {t:'Hwæt lv gdw?', s:false},
+          {t:'Lw lv grhq', s:true},
+          {t:'Oh, grhq!', s:false}
+        ]
+      },
+      sam: {
+        name: 'Samantha',
+        msgs: [
+          {t:'Dqvwv, Pdop!', s:false},
+          {t:'Pdop, lw lw!', s:false},
+          {t:'Lw lw, grhq!', s:true},
+          {t:'Yh, grhq!', s:false}
+        ]
+      }
+    };
+
+    function loadChat(key) {
+      const chat = chats[key];
+      document.getElementById('chatName').innerText = chat.name;
+      const box = document.getElementById('messages');
+      box.innerHTML = '';
+      chat.msgs.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'msg ' + (m.s ? 'sent' : 'received');
+        div.innerText = m.t;
+        box.appendChild(div);
+      });
+    }
+  </script></body>
+</html>
