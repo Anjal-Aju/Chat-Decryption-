@@ -16,13 +16,6 @@ In addition to its visual fidelity, the WhatsApp UI Clone also aims to replicate
 
 The WhatsApp UI Clone showcases my ability to design and develop a visually appealing user interface. While it does not include the messaging feature, it demonstrates my proficiency in UI design principles and front-end development techniques used in popular messaging applications like WhatsApp. By exploring this clone, you can see my attention to detail and my commitment to creating a seamless and enjoyable user experience.
 
-## Light and Dark themes
-
-The app has light and dark mode features and can be changed by going to `Settings` just like in your regular WhatsApp for desktop or mobile.
-<p align="center">
-  <img src="https://i.postimg.cc/qv0KyHkZ/readme-app-nav-slides-light-mode.png"/>
-  <img src="https://i.postimg.cc/259LsqnP/readme-app-nav-slides-dark-mode.png"/>
-</p>
 
 ## Responsive Design
 
@@ -40,6 +33,3 @@ This WhatsApp UI clone is designed to be fully responsive, ensuring optimal user
 
 This project was inspired by the WhatsApp application. I would like to thank the creators of WhatsApp for their excellent work.
 
-Live project link here 😁👇🏾
-
-https://sovrano28.github.io/Whatsapp-UI-Clone/
