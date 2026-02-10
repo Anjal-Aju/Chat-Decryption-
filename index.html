@@ -39,6 +39,8 @@
         background-color: #0c1317;
         color: #e9edef;
         overflow: hidden;
+        margin: 0;
+        padding: 0;
     }
     
     ::-webkit-scrollbar { width: 5px; }
@@ -68,9 +70,33 @@
     .slide-in { animation: slideIn 0.3s cubic-bezier(0.1, 0.82, 0.25, 1) forwards; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .fade-in { animation: fadeIn 0.2s ease-out; }
+
+    /* Decryption Styles */
+    .cipher-char {
+        color: #fca5a5; /* Red/Pink for encrypted */
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0 1px;
+        transition: all 0.2s;
+        border-bottom: 1px dotted #fca5a5;
+    }
+    .cipher-char:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+    .cipher-char.locked {
+        color: #ef4444; /* Darker red for locked */
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+    .solved-char {
+        color: inherit; /* Normal text color */
+        animation: fadeIn 0.5s ease-in;
+    }
   </style>
 </head>
-<body class="h-screen w-full flex flex-col justify-center items-center relative">
+<body class="h-screen w-full relative">
 
   <button onclick="toggleDevDecrypt()" class="fixed bottom-4 left-4 z-[200] bg-red-600 hover:bg-red-700 text-white font-mono text-xs px-3 py-2 rounded shadow-lg border border-red-400">
     🛠️ DEV: DECRYPT
@@ -83,15 +109,35 @@
       </div>
       <h1 class="text-2xl font-light mb-4 text-wa-text">Rahul's Phone</h1>
       <p class="text-wa-textSec text-sm mb-8 text-center max-w-md leading-relaxed">
-          <span class="text-wa-primary font-bold tracking-wide">MISSION BRIEF:</span><br>
-          Everything is encrypted.<br>
-          You need to find the <strong>Key</strong> to read the messages.<br>
+          <span class="text-wa-primary font-bold tracking-wide">MISSION:</span><br>
+          Use the <span class="text-white bg-wa-primary px-1 rounded">Decryption Solver</span> to read the chats.<br>
           <br>
-          <span class="text-red-400 font-bold border-b border-red-400 pb-0.5">⚠️ GRAB A PEN AND PAPER.</span><br>
-          <span class="text-xs text-wa-textSec mt-1 block">You will need to manually decrypt the text once you find the key.</span>
+          1. Find the Key.<br>
+          2. Click any <span class="text-red-300 font-mono">RED LETTER</span> to solve it.<br>
+          <span class="text-red-400 font-bold">WARNING:</span> Wrong guesses lock that letter for 1 minute.
       </p>
       <div class="px-8 py-2 border border-wa-primary rounded-full text-wa-primary font-medium hover:bg-wa-header transition tracking-wide text-sm">
           ENTER SYSTEM
+      </div>
+  </div>
+
+  <div id="solver-modal" class="fixed inset-0 z-[180] bg-black/80 hidden flex items-center justify-center p-4 fade-in">
+      <div class="bg-wa-header w-80 rounded-lg shadow-2xl border border-wa-border flex flex-col items-center p-6">
+          <div class="text-wa-textSec text-xs uppercase tracking-widest mb-2">Decryption Tool</div>
+          <div class="text-3xl text-wa-text mb-4 font-mono">
+              <span class="text-red-400" id="solver-target">?</span> <i class="fas fa-arrow-right text-sm mx-2 text-wa-textSec"></i> <span class="text-wa-primary">?</span>
+          </div>
+          
+          <input type="text" id="solver-input" maxlength="1" class="bg-wa-bg text-center text-2xl text-wa-text border-b-2 border-wa-primary w-16 mb-4 focus:outline-none uppercase" placeholder="?">
+          
+          <div id="solver-timer" class="hidden text-red-500 font-bold text-xl mb-4 font-mono">LOCKED: 60s</div>
+
+          <div id="solver-msg" class="text-xs h-4 mb-4 text-center text-red-400"></div>
+          
+          <div class="flex gap-2 w-full">
+              <button onclick="closeSolver()" class="flex-1 py-2 text-wa-textSec hover:bg-wa-incoming rounded text-sm">Cancel</button>
+              <button id="solver-submit-btn" onclick="submitSolution()" class="flex-1 py-2 bg-wa-primary text-black font-bold rounded text-sm">Decrypt</button>
+          </div>
       </div>
   </div>
 
@@ -115,7 +161,7 @@
       </div>
   </div>
 
-  <div class="flex h-full w-full xl:w-[1600px] xl:mx-auto relative shadow-2xl border-x border-wa-border overflow-hidden bg-wa-bg">
+  <div class="flex h-full w-full relative overflow-hidden bg-wa-bg">
     
     <div id="column-1" class="w-full md:w-[400px] lg:w-[450px] flex flex-col border-r border-wa-border bg-wa-sidebar h-full z-20 transition-colors">
       
@@ -289,7 +335,7 @@
   <script>
     // --- DATABASE ---
     const contactDB = {
-        'neha': { name: 'Neha (Classmate)', img: 'assets/pfp/neha.png', about: 'Text me if urgent 💅', statusImg: 'assets/status/neha_status.png', statusText: 'Bored in class...' },
+        'neha': { name: 'Neha', img: 'assets/pfp/neha.png', about: 'Text me if urgent 💅', statusImg: 'assets/status/neha_status.png', statusText: 'Bored in class...' },
         
         // JITHIN'S STATUS IS THE KEY CLUE (Image must have text "KEY IN SETTINGS")
         'jithin': { name: 'Jithin (Jack)', img: 'assets/pfp/jithin.png', about: 'Sleep is for the weak 🎮', statusImg: 'assets/status/jithin_clue.png', statusText: 'My Setup 🖥️' },
@@ -301,12 +347,12 @@
         'proj_grp': { name: 'Physics Project Grp', img: 'https://ui-avatars.com/api/?name=PHY&background=111111&color=fff', isGroup: true, members: ['Rahul (You)', 'Rohit', 'Kiran', '+91 99955 88221', 'Vishnu', 'Abhijith', 'Sreehari'] },
         
         'amazon': { name: 'Amazon', img: 'assets/pfp/amazon.png', about: 'Official' },
-        'swiggy': { name: 'Swiggy', img: 'https://ui-avatars.com/api/?name=Swiggy&background=orange&color=fff', about: 'Food Delivery' },
+        'swiggy': { name: 'Swiggy', img: 'assets/pfp/swiggy.png', about: 'Food Delivery' },
         'cousin_s': { name: 'Cousin Sandra', img: 'assets/pfp/sandra.png', about: 'Family' },
         
         'unknown1': { name: '+91 90001 22233', img: 'https://ui-avatars.com/api/?name=U&background=gray', about: 'Business' },
         'unknown2': { name: '+91 88822 55500', img: 'https://ui-avatars.com/api/?name=U&background=gray', about: 'Busy' },
-        'bestie': { name: 'Anjali (Bestie) 👯‍♀️', img: 'assets/pfp/anjali.png', about: 'Coffee addict ☕', statusImg: 'assets/status/anjali_status.png', statusText: 'Caffeine fix' },
+        'bestie': { name: 'Anjali 👯‍♀️', img: 'assets/pfp/anjali.png', about: 'Coffee addict ☕', statusImg: 'assets/status/anjali_status.png', statusText: 'Caffeine fix' },
         'arjun': { name: 'Arjun', img: 'assets/pfp/arjun.png', about: 'Living my best life ✨', statusImg: 'assets/status/arjun_status.png', statusText: 'OOTD 📸' },
 
         'class_grp': { name: 'S5 CS Official', img: 'https://ui-avatars.com/api/?name=CS&background=purple&color=fff', isGroup: true, members: ['HOD', 'Tutor', 'You', 'Class Rep', 'Adithya', 'Meenakshi'] },
@@ -315,7 +361,7 @@
         'dominos': { name: 'Dominos Pizza', img: 'assets/pfp/pizza.png', about: 'Official' },
         'gym_trainer': { name: 'Arun (Trainer)', img: 'assets/pfp/gym.png', about: 'No Pain No Gain' },
         'project_team': { name: 'Mini Project Group 4', img: 'https://ui-avatars.com/api/?name=MP&background=teal&color=fff', isGroup: true, members: ['You', 'Sanjay', 'Priya'] },
-        'family_grp': { name: 'Sweet Home 🏡', img: 'https://ui-avatars.com/api/?name=Family&background=yellow&color=000', isGroup: true, members: ['Mom', 'Dad', 'You', 'Sandra'] }
+        'family_grp': { name: 'Sweet Home 🏡', img: 'assets/pfp/home.png', isGroup: true, members: ['Mom', 'Dad', 'You', 'Sandra'] }
     };
 
     const chatData = {
@@ -448,6 +494,11 @@
     let cipherMap = {};
     let isDevDecrypted = false;
     let statusTimeout = null;
+    let solvedCiphers = {}; // { chatId: Set() }
+    let letterLockouts = {}; // { char: timestamp }
+    let lockoutInterval = null;
+    let currentSolveChar = null;
+    let lastSeenCache = {}; 
 
     function generateKey() {
         const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -459,7 +510,6 @@
             cipherMap[real] = secret;
             cipherMap[real.toUpperCase()] = secret.toUpperCase();
         }
-        console.log("Encryption Active. Find the key in Settings.");
     }
 
     generateKey();
@@ -481,15 +531,160 @@
         renderStatus();
     }
 
-    function applyCipher(text) {
+    function applyCipher(text, contextId) {
         if (!text) return '';
         if (isDevDecrypted) return text; 
         
-        return text.split('').map(char => {
-            if (cipherMap[char]) return cipherMap[char];
-            return char;
-        }).join('');
+        const localSolved = (contextId && solvedCiphers[contextId]) ? solvedCiphers[contextId] : new Set();
+
+        let resultHtml = '';
+        for (let i = 0; i < text.length; i++) {
+            const realChar = text[i];
+            
+            // Strictly check for letters. Pass through everything else.
+            if (!/[a-zA-Z]/.test(realChar)) {
+                resultHtml += realChar;
+                continue;
+            }
+
+            const cipherChar = cipherMap[realChar];
+            // Safety check if generation failed somehow or char matches regex but not in map
+            if (!cipherChar) {
+                resultHtml += realChar;
+                continue;
+            }
+
+            const isLocked = letterLockouts[cipherChar] && letterLockouts[cipherChar] > Date.now();
+
+            if (localSolved.has(cipherChar)) {
+                resultHtml += `<span class="solved-char">${realChar}</span>`;
+            } else {
+                if (contextId) {
+                    const lockClass = isLocked ? 'locked' : '';
+                    // Escape just in case, though cipher chars are just letters
+                    const safeCipher = cipherChar.replace("'", "\\'"); 
+                    resultHtml += `<span class="cipher-char ${lockClass}" onclick="event.stopPropagation(); openSolver('${safeCipher}')">${cipherChar}</span>`;
+                } else {
+                    resultHtml += cipherChar;
+                }
+            }
+        }
+        return resultHtml;
     }
+
+    function openSolver(char) {
+        if (letterLockouts[char] && letterLockouts[char] > Date.now()) {
+            currentSolveChar = char;
+            document.getElementById('solver-modal').classList.remove('hidden');
+            startLockout(char); 
+            return;
+        }
+
+        currentSolveChar = char;
+        document.getElementById('solver-target').innerText = char;
+        document.getElementById('solver-input').value = '';
+        document.getElementById('solver-input').disabled = false;
+        document.getElementById('solver-msg').innerText = '';
+        document.getElementById('solver-timer').classList.add('hidden');
+        document.getElementById('solver-submit-btn').disabled = false;
+        document.getElementById('solver-submit-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+        document.getElementById('solver-modal').classList.remove('hidden');
+        document.getElementById('solver-input').focus();
+    }
+
+    function closeSolver() {
+        if (lockoutInterval) clearInterval(lockoutInterval);
+        document.getElementById('solver-modal').classList.add('hidden');
+    }
+
+    function startLockout(char) {
+        const timerDisplay = document.getElementById('solver-timer');
+        const submitBtn = document.getElementById('solver-submit-btn');
+        const input = document.getElementById('solver-input');
+        const msg = document.getElementById('solver-msg');
+        
+        timerDisplay.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        input.disabled = true;
+        input.value = '';
+        
+        document.getElementById('solver-target').innerText = char;
+
+        if (lockoutInterval) clearInterval(lockoutInterval);
+
+        const updateTimer = () => {
+            const remaining = Math.ceil((letterLockouts[char] - Date.now()) / 1000);
+            if (remaining <= 0) {
+                clearInterval(lockoutInterval);
+                timerDisplay.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                input.disabled = false;
+                input.focus();
+                msg.innerText = "Unlocked. Try again.";
+                msg.className = "text-xs h-4 mb-4 text-center text-green-400";
+                delete letterLockouts[char];
+            } else {
+                timerDisplay.innerText = `LOCKED: ${remaining}s`;
+                msg.innerText = "Incorrect guess. Letter locked.";
+                msg.className = "text-xs h-4 mb-4 text-center text-red-400";
+            }
+        };
+
+        updateTimer();
+        lockoutInterval = setInterval(updateTimer, 1000);
+    }
+
+    function submitSolution() {
+        if (letterLockouts[currentSolveChar] && letterLockouts[currentSolveChar] > Date.now()) return;
+
+        const guess = document.getElementById('solver-input').value.toUpperCase();
+        if (!guess) return;
+
+        let correctRealChar = null;
+        for (const [real, cipher] of Object.entries(cipherMap)) {
+            if (cipher === currentSolveChar) {
+                correctRealChar = real;
+                break;
+            }
+        }
+
+        if (guess === correctRealChar.toUpperCase()) {
+            if (!solvedCiphers[currentChatId]) {
+                solvedCiphers[currentChatId] = new Set();
+            }
+            
+            const lowerCipher = currentSolveChar.toLowerCase();
+            const upperCipher = currentSolveChar.toUpperCase();
+            
+            solvedCiphers[currentChatId].add(lowerCipher);
+            solvedCiphers[currentChatId].add(upperCipher);
+            
+            document.getElementById('solver-msg').className = "text-xs h-4 mb-4 text-center text-green-400";
+            document.getElementById('solver-msg').innerText = "Correct! Decrypting...";
+            
+            setTimeout(() => {
+                closeSolver();
+                if(currentChatId) loadChat(currentChatId);
+                // Trigger header update immediately
+                const headerName = document.getElementById('header-name');
+                if (headerName && currentChatId) {
+                    const contact = getContact(currentChatId);
+                    headerName.innerHTML = applyCipher(contact.name, currentChatId);
+                }
+            }, 800);
+        } else {
+            letterLockouts[currentSolveChar] = Date.now() + 60000; 
+            startLockout(currentSolveChar);
+        }
+    }
+
+    document.getElementById('solver-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            submitSolution();
+        }
+    });
 
     function showKeyModal() {
         const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -527,7 +722,8 @@
     function getContact(key) {
         let contact = contactDB[key];
         if(!contact) contact = { name: 'Unknown', img: 'https://ui-avatars.com/api/?name=?', isGroup: false };
-        return { ...contact, name: applyCipher(contact.name), about: applyCipher(contact.about || '') };
+        // Return raw contact data. Encryption happens in render.
+        return { ...contact }; 
     }
 
     function renderChatList(filter = '') {
@@ -540,7 +736,9 @@
             const lastMsg = data.messages[data.messages.length - 1];
             
             let rawText = lastMsg.type === 'image' ? '📷 Photo' : lastMsg.text;
-            let msgPreview = applyCipher(rawText); 
+            
+            let msgPreview = applyCipher(rawText, null); 
+            let namePreview = applyCipher(contact.name, null);
             
             let badgeHtml = data.unread > 0 ? `<div class="bg-wa-primary text-wa-bg text-[11px] h-5 w-5 flex items-center justify-center rounded-full font-bold">${data.unread}</div>` : '';
             
@@ -549,12 +747,12 @@
               <div class="relative"><img src="${contact.img}" onerror="this.src='https://ui-avatars.com/api/?name=${contact.name}'" class="w-12 h-12 rounded-full object-cover mr-4"></div>
               <div class="flex-1 min-w-0 pr-2">
                 <div class="flex justify-between items-baseline mb-1">
-                  <span class="text-[17px] text-wa-text font-normal truncate">${contact.name}</span>
+                  <span class="text-[17px] text-wa-text font-normal truncate">${namePreview}</span>
                   <span class="text-[12px] text-wa-textSec">${lastMsg.time}</span>
                 </div>
                 <div class="flex justify-between items-center">
                   <span class="text-[14px] text-wa-textSec truncate flex-1 flex items-center gap-1">
-                     <span class="truncate">${msgPreview}</span>
+                     <span class="truncate block w-full">${msgPreview}</span>
                   </span>
                   ${badgeHtml}
                 </div>
@@ -573,12 +771,12 @@
             const c = getContact(key);
             const db = contactDB[key];
             if (!db.statusImg) return; 
-            const encStatus = applyCipher(db.statusText);
+            
             recentHtml += `
-             <div class="flex items-center p-3 px-4 cursor-pointer hover:bg-wa-header transition" onclick="openStatus('${c.name}', '${db.statusImg}', '${encStatus}')">
+             <div class="flex items-center p-3 px-4 cursor-pointer hover:bg-wa-header transition" onclick="openStatus('${c.name}', '${db.statusImg}', '${db.statusText}')">
                 <img src="${c.img}" onerror="this.src='https://ui-avatars.com/api/?name=${c.name}'" class="w-12 h-12 rounded-full object-cover border-[2.5px] border-wa-primary p-[1px]">
                 <div class="ml-4">
-                    <div class="text-[17px] text-wa-text font-medium">${c.name}</div>
+                    <div class="text-[17px] text-wa-text font-medium">${applyCipher(c.name, null)}</div>
                     <div class="text-[13px] text-wa-textSec">Today, 10:23 AM</div>
                 </div>
              </div>`;
@@ -602,7 +800,7 @@
              <div class="flex items-center p-3 px-4 hover:bg-wa-header border-b border-wa-border transition">
                  <div class="w-12 h-12 rounded-full bg-wa-primary flex items-center justify-center mr-4"><i class="fas fa-link text-white"></i></div>
                  <div class="flex-1">
-                     <div class="text-[17px] text-wa-text font-normal">${contact.name}</div>
+                     <div class="text-[17px] text-wa-text font-normal">${applyCipher(contact.name, 'calls')}</div>
                      <div class="text-[13px] text-wa-textSec flex items-center gap-1">
                          <i class="fas fa-arrow-down ${c.color} text-[12px]"></i> ${timeDisplay}
                      </div>
@@ -630,6 +828,41 @@
         return nameColors[index];
     }
 
+    function updateContactInfo() {
+        if(!currentChatId) return; 
+        const contact = getContact(currentChatId); 
+        document.getElementById('info-name').innerHTML = applyCipher(contact.name, currentChatId); 
+        document.getElementById('info-img').src = contact.img; 
+
+        if (contact.isGroup) {
+            document.getElementById('info-about-section').classList.add('hidden');
+            document.getElementById('info-group-section').classList.remove('hidden');
+            
+            const rawMembers = contactDB[currentChatId]?.members || [];
+            let membersHtml = '';
+            rawMembers.forEach(member => {
+                let displayName = applyCipher(member, currentChatId);
+                let displayImg = 'https://ui-avatars.com/api/?name=' + member + '&background=random';
+                
+                const dbKey = Object.keys(contactDB).find(key => contactDB[key].name === member);
+                if(dbKey) displayImg = contactDB[dbKey].img;
+                if(member.includes('Rahul')) displayImg = 'assets/pfp/rahul.png';
+
+                membersHtml += `
+                <div class="py-3 px-6 hover:bg-wa-header flex items-center cursor-pointer border-t border-wa-border">
+                    <img src="${displayImg}" onerror="this.src='https://ui-avatars.com/api/?name=${member}'" class="w-10 h-10 rounded-full mr-4 object-cover">
+                    <span class="text-[16px] text-wa-text">${displayName}</span>
+                </div>`;
+            });
+            document.getElementById('info-group-list').innerHTML = membersHtml;
+
+        } else {
+            document.getElementById('info-about-section').classList.remove('hidden');
+            document.getElementById('info-group-section').classList.add('hidden');
+            document.getElementById('info-about').innerHTML = applyCipher(contact.about, currentChatId); 
+        }
+    }
+
     function loadChat(key) {
         currentChatId = key;
         const data = chatData[key];
@@ -646,18 +879,21 @@
         col2.classList.remove('hidden');
         col2.classList.add('flex');
         
-        document.getElementById('header-name').innerText = contact.name;
+        document.getElementById('header-name').innerHTML = applyCipher(contact.name, currentChatId);
         document.getElementById('header-img').src = contact.img;
         
         let status = '';
         if(contact.isGroup) {
              const rawMembers = contactDB[key]?.members || [];
-             status = rawMembers.map(m => applyCipher(m)).join(', ');
+             status = rawMembers.map(m => applyCipher(m, currentChatId)).join(', ');
         } else {
-             const hours = Math.floor(Math.random() * 12) + 1;
-             const mins = Math.floor(Math.random() * 60).toString().padStart(2, '0');
-             const ampm = Math.random() > 0.5 ? 'AM' : 'PM';
-             status = `last seen today at ${hours}:${mins} ${ampm}`;
+             if (!lastSeenCache[key]) {
+                 const hours = Math.floor(Math.random() * 12) + 1;
+                 const mins = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+                 const ampm = Math.random() > 0.5 ? 'AM' : 'PM';
+                 lastSeenCache[key] = `last seen today at ${hours}:${mins} ${ampm}`;
+             }
+             status = lastSeenCache[key];
         }
         document.getElementById('header-status').innerText = status;
         
@@ -680,12 +916,12 @@
             
             let senderHtml = '';
             if (contact.isGroup && msg.sender && !isOut) {
-                let sName = applyCipher(msg.sender);
+                let sName = applyCipher(msg.sender, currentChatId);
                 let colorClass = getNameColor(msg.sender); 
                 senderHtml = `<div class="text-[13px] font-bold ${colorClass} mb-0.5">${sName}</div>`;
             }
             
-            let content = applyCipher(msg.text || '');
+            let content = applyCipher(msg.text || '', currentChatId);
             if(msg.type === 'image') content = `<div class="mb-1"><img src="${msg.src}" class="rounded-lg max-w-[300px] max-h-[300px] object-cover cursor-pointer"></div>${content}`;
             
             area.innerHTML += `
@@ -699,44 +935,18 @@
             </div>`;
         });
         area.scrollTop = area.scrollHeight;
+
+        if(document.getElementById('contact-info-panel').style.width === '350px') {
+            updateContactInfo();
+        }
     }
 
     function toggleContactInfo() { 
         const p = document.getElementById('contact-info-panel'); 
-        if(p.style.width === '350px') p.style.width = '0px'; 
-        else { 
-            if(!currentChatId) return; 
-            const contact = getContact(currentChatId); 
-            document.getElementById('info-name').innerText = contact.name; 
-            document.getElementById('info-img').src = contact.img; 
-
-            if (contact.isGroup) {
-                document.getElementById('info-about-section').classList.add('hidden');
-                document.getElementById('info-group-section').classList.remove('hidden');
-                
-                const rawMembers = contactDB[currentChatId]?.members || [];
-                let membersHtml = '';
-                rawMembers.forEach(member => {
-                    let displayName = applyCipher(member);
-                    let displayImg = 'https://ui-avatars.com/api/?name=' + member + '&background=random';
-                    
-                    const dbKey = Object.keys(contactDB).find(key => contactDB[key].name === member);
-                    if(dbKey) displayImg = contactDB[dbKey].img;
-                    if(member.includes('Rahul')) displayImg = 'assets/pfp/rahul.png';
-
-                    membersHtml += `
-                    <div class="py-3 px-6 hover:bg-wa-header flex items-center cursor-pointer border-t border-wa-border">
-                        <img src="${displayImg}" onerror="this.src='https://ui-avatars.com/api/?name=${member}'" class="w-10 h-10 rounded-full mr-4 object-cover">
-                        <span class="text-[16px] text-wa-text">${displayName}</span>
-                    </div>`;
-                });
-                document.getElementById('info-group-list').innerHTML = membersHtml;
-
-            } else {
-                document.getElementById('info-about-section').classList.remove('hidden');
-                document.getElementById('info-group-section').classList.add('hidden');
-                document.getElementById('info-about').innerText = contact.about; 
-            }
+        if(p.style.width === '350px') {
+            p.style.width = '0px'; 
+        } else { 
+            updateContactInfo();
             p.style.width = '350px'; 
         } 
     }
@@ -758,7 +968,7 @@
         
         document.getElementById('status-modal').classList.remove('hidden'); 
         document.getElementById('status-img-main').src = img; 
-        document.getElementById('status-caption').innerText = text || '';
+        document.getElementById('status-caption').innerHTML = applyCipher(text || '', 'status');
     }
     
     function closeStatus() { 
