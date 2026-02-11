@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp Web - Rahul's Phone</title>
+  <title>WhatsApp Web - Vikram's Phone</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -98,16 +98,12 @@
 </head>
 <body class="h-screen w-full relative">
 
-  <button onclick="toggleDevDecrypt()" class="fixed bottom-4 left-4 z-[200] bg-red-600 hover:bg-red-700 text-white font-mono text-xs px-3 py-2 rounded shadow-lg border border-red-400">
-    🛠️ DEV: DECRYPT
-  </button>
-
   <div id="start-overlay" class="fixed inset-0 z-[200] bg-wa-bg flex flex-col items-center justify-center text-white cursor-pointer transition-colors" onclick="enterGame()">
       <div class="mb-8 relative">
           <i class="fab fa-whatsapp text-6xl text-gray-500"></i>
           <div class="absolute -bottom-2 -right-2 bg-yellow-600 text-[10px] px-2 py-0.5 rounded font-bold tracking-wider">LOCKED</div>
       </div>
-      <h1 class="text-2xl font-light mb-4 text-wa-text">Rahul's Phone</h1>
+      <h1 class="text-2xl font-light mb-4 text-wa-text">Vikram's Phone</h1>
       <p class="text-wa-textSec text-sm mb-8 text-center max-w-md leading-relaxed">
           <span class="text-wa-primary font-bold tracking-wide">MISSION:</span><br>
           Use the <span class="text-white bg-wa-primary px-1 rounded">Decryption Solver</span> to read the chats.<br>
@@ -127,13 +123,9 @@
           <div class="text-3xl text-wa-text mb-4 font-mono">
               <span class="text-red-400" id="solver-target">?</span> <i class="fas fa-arrow-right text-sm mx-2 text-wa-textSec"></i> <span class="text-wa-primary">?</span>
           </div>
-          
           <input type="text" id="solver-input" maxlength="1" class="bg-wa-bg text-center text-2xl text-wa-text border-b-2 border-wa-primary w-16 mb-4 focus:outline-none uppercase" placeholder="?">
-          
           <div id="solver-timer" class="hidden text-red-500 font-bold text-xl mb-4 font-mono">LOCKED: 60s</div>
-
           <div id="solver-msg" class="text-xs h-4 mb-4 text-center text-red-400"></div>
-          
           <div class="flex gap-2 w-full">
               <button onclick="closeSolver()" class="flex-1 py-2 text-wa-textSec hover:bg-wa-incoming rounded text-sm">Cancel</button>
               <button id="solver-submit-btn" onclick="submitSolution()" class="flex-1 py-2 bg-wa-primary text-black font-bold rounded text-sm">Decrypt</button>
@@ -166,7 +158,7 @@
     <div id="column-1" class="w-full md:w-[400px] lg:w-[450px] flex flex-col border-r border-wa-border bg-wa-sidebar h-full z-20 transition-colors">
       
       <div class="bg-wa-header px-4 py-2.5 flex justify-between items-center shrink-0 h-[60px]">
-        <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=Rahul'" class="w-10 h-10 rounded-full cursor-pointer hover:opacity-80 transition-opacity" onclick="showPfp(this.src, 'Rahul')">
+        <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=Vikram'" class="w-10 h-10 rounded-full cursor-pointer hover:opacity-80 transition-opacity" onclick="showPfp(this.src, 'Vikram')">
         <div class="flex gap-6 text-xl text-wa-textSec">
           <i class="fas fa-users cursor-pointer hover:text-wa-text transition-colors"></i>
           <i class="fas fa-circle-notch cursor-pointer hover:text-wa-text transition-colors" onclick="switchTab('status')"></i>
@@ -197,11 +189,10 @@
       
       <div class="flex-1 overflow-y-auto bg-wa-sidebar relative scrollbar-hide">
         <div id="view-chats" class="block"></div>
-        
         <div id="view-status" class="hidden pb-20">
              <div class="flex items-center p-3 px-4 cursor-pointer hover:bg-wa-header transition h-[72px]">
                 <div class="relative mr-4">
-                    <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=R'" class="w-12 h-12 rounded-full object-cover">
+                    <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=V'" class="w-12 h-12 rounded-full object-cover">
                     <div class="absolute bottom-0 right-0 bg-wa-primary border-2 border-wa-sidebar rounded-full w-5 h-5 flex items-center justify-center text-white text-[10px] font-bold">+</div>
                 </div>
                 <div class="flex-1">
@@ -212,7 +203,6 @@
              <div class="text-wa-textSec text-[13px] font-medium px-4 py-3 mt-2">RECENT UPDATES</div>
              <div id="status-list-recent"></div> 
         </div>
-
         <div id="view-calls" class="hidden pb-20">
             <div id="calls-list-container"></div>
         </div>
@@ -318,9 +308,9 @@
           </div>
 
           <div class="bg-wa-header p-4 flex items-center gap-4 rounded-sm shadow-sm mb-4 cursor-pointer hover:bg-wa-incoming transition">
-              <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=R'" class="w-20 h-20 rounded-full">
+              <img src="assets/pfp/rahul.png" onerror="this.src='https://ui-avatars.com/api/?name=V'" class="w-20 h-20 rounded-full">
               <div class="flex-1">
-                  <div class="text-[19px] text-wa-text">Rahul</div>
+                  <div class="text-[19px] text-wa-text">Vikram</div>
                   <div class="text-[14px] text-wa-textSec mt-1 truncate">Battery about to die 🔋</div>
               </div>
           </div>
@@ -335,44 +325,93 @@
   <script>
     // --- DATABASE ---
     const contactDB = {
-        'neha': { name: 'Neha', img: 'assets/pfp/neha.png', about: 'Text me if urgent 💅', statusImg: 'assets/status/neha_status.png', statusText: 'Bored in class...' },
-        
-        // JITHIN'S STATUS IS THE KEY CLUE (Image must have text "KEY IN SETTINGS")
-        'jithin': { name: 'Jithin (Jack)', img: 'assets/pfp/jithin.png', about: 'Sleep is for the weak 🎮', statusImg: 'assets/status/jithin_clue.png', statusText: 'My Setup 🖥️' },
-        
-        'mommy': { name: 'Mom ❤️', img: 'assets/pfp/mom.png', about: 'Available' },
-        'daddy': { name: 'Dad ❤️', img: 'assets/pfp/dad.png', about: 'Urgent calls only' },
-        'kiran': { name: 'Kiran (Turf)', img: 'assets/pfp/kiran.png', about: 'Football is Life ⚽' },
-        
-        'proj_grp': { name: 'Physics Project Grp', img: 'https://ui-avatars.com/api/?name=PHY&background=111111&color=fff', isGroup: true, members: ['Rahul (You)', 'Rohit', 'Kiran', '+91 99955 88221', 'Vishnu', 'Abhijith', 'Sreehari'] },
-        
+        'neha': { name: 'Riya', img: 'assets/pfp/neha.png', about: 'Text me if urgent 💅', statusImg: 'assets/status/neha_status.png', statusText: 'Bored in class...' },
+        'jithin': { name: 'Varun (Gamer)', img: 'assets/pfp/jithin.png', about: 'Sleep is for the weak 🎮', statusImg: 'assets/status/jithin_clue.png', statusText: 'My Setup 🖥️' },
+        'mommy': { name: 'Amma ❤️', img: 'assets/pfp/mom.png', about: 'Available' },
+        'daddy': { name: 'Appa ❤️', img: 'assets/pfp/dad.png', about: 'Urgent calls only' },
+        'kiran': { name: 'Siddharth (Turf)', img: 'assets/pfp/kiran.png', about: 'Football is Life ⚽' },
+        'proj_grp': { name: 'Backbenchers 4.0 🚀', img: 'https://ui-avatars.com/api/?name=BB&background=111111&color=fff', isGroup: true, members: ['Vikram (You)', 'Rohit', 'Siddharth', '+91 99955 88221', 'Vishnu', 'Abhijith', 'Sreehari'] },
         'amazon': { name: 'Amazon', img: 'assets/pfp/amazon.png', about: 'Official' },
         'swiggy': { name: 'Swiggy', img: 'assets/pfp/swiggy.png', about: 'Food Delivery' },
-        'cousin_s': { name: 'Cousin Sandra', img: 'assets/pfp/sandra.png', about: 'Family' },
-        
+        'cousin_s': { name: 'Cousin Divya', img: 'assets/pfp/sandra.png', about: 'Family' },
         'unknown1': { name: '+91 90001 22233', img: 'https://ui-avatars.com/api/?name=U&background=gray', about: 'Business' },
         'unknown2': { name: '+91 88822 55500', img: 'https://ui-avatars.com/api/?name=U&background=gray', about: 'Busy' },
-        'bestie': { name: 'Anjali 👯‍♀️', img: 'assets/pfp/anjali.png', about: 'Coffee addict ☕', statusImg: 'assets/status/anjali_status.png', statusText: 'Caffeine fix' },
-        'arjun': { name: 'Arjun', img: 'assets/pfp/arjun.png', about: 'Living my best life ✨', statusImg: 'assets/status/arjun_status.png', statusText: 'OOTD 📸' },
-
+        'bestie': { name: 'Meera (Bestie) 👯‍♀️', img: 'assets/pfp/anjali.png', about: 'Coffee addict ☕', statusImg: 'assets/status/anjali_status.png', statusText: 'Caffeine fix' },
+        'arjun': { name: 'Kabir', img: 'assets/pfp/arjun.png', about: 'Living my best life ✨', statusImg: 'assets/status/arjun_status.png', statusText: 'OOTD 📸' },
         'class_grp': { name: 'S5 CS Official', img: 'https://ui-avatars.com/api/?name=CS&background=purple&color=fff', isGroup: true, members: ['HOD', 'Tutor', 'You', 'Class Rep', 'Adithya', 'Meenakshi'] },
         'hr_intern': { name: 'HR - TechSolutions', img: 'https://ui-avatars.com/api/?name=HR&background=121212&color=fff', about: 'Recruitment Team' },
-        'aunt_lissy': { name: 'Lissy Aunty', img: 'assets/pfp/lissy.png', about: 'God is Love' },
+        'aunt_lissy': { name: 'Sushma Aunty', img: 'assets/pfp/lissy.png', about: 'God is Love' },
         'dominos': { name: 'Dominos Pizza', img: 'assets/pfp/pizza.png', about: 'Official' },
         'gym_trainer': { name: 'Arun (Trainer)', img: 'assets/pfp/gym.png', about: 'No Pain No Gain' },
         'project_team': { name: 'Mini Project Group 4', img: 'https://ui-avatars.com/api/?name=MP&background=teal&color=fff', isGroup: true, members: ['You', 'Sanjay', 'Priya'] },
-        'family_grp': { name: 'Sweet Home 🏡', img: 'assets/pfp/home.png', isGroup: true, members: ['Mom', 'Dad', 'You', 'Sandra'] }
+        'family_grp': { name: 'Sweet Home 🏡', img: 'assets/pfp/home.png', isGroup: true, members: ['Mom', 'Dad', 'You', 'Divya'] }
     };
 
     const chatData = {
       'neha': { unread: 3, messages: [
-          { date: 'Yesterday', side: 'in', text: 'Hey Rahul! 👋', time: '08:00 AM' },
+          { date: 'Yesterday', side: 'in', text: 'Hey Vik! 👋', time: '08:00 AM' },
           { date: 'Yesterday', side: 'in', text: 'Are you coming for the freshers party?', time: '08:05 AM' },
           { date: 'Yesterday', side: 'out', text: 'Maybe.', time: '06:15 PM' },
           { date: 'Yesterday', side: 'in', text: 'Come naa, it will be fun! 😉', time: '06:30 PM' },
           { date: 'Today', side: 'in', text: 'Good morning!', time: '08:00 AM' },
           { date: 'Today', side: 'in', type: 'image', src: 'assets/chat/neha_dress.png', text: 'Does this dress look good?', time: '10:05 AM' },
-          { date: 'Today', side: 'in', text: 'Rahul? Seen but no reply? 🙄', time: '12:00 PM' }
+          { date: 'Today', side: 'in', text: 'Vikram? Seen but no reply? 🙄', time: '12:00 PM' }
+      ]},
+      'bestie': { unread: 0, messages: [
+          { date: 'Yesterday', side: 'in', text: 'Did you submit the record?', time: '04:00 PM' },
+          { date: 'Yesterday', side: 'out', text: 'Yes. Finally.', time: '04:05 PM' },
+          { date: 'Yesterday', side: 'out', text: 'I hate my parents sometimes.', time: '08:00 PM' },
+          { date: 'Yesterday', side: 'in', text: 'Come over. We can sit on the roof and talk. I\'ll steal snacks.', time: '08:05 PM' },
+          { date: 'Yesterday', side: 'out', text: 'Thanks Meera. You are the best.', time: '08:10 PM' },
+          { date: 'Today', side: 'in', type: 'image', src: 'assets/chat/canteen.png', text: 'Canteen?? Come fast. They made puffs.', time: '11:00 AM' },
+          { date: 'Today', side: 'in', text: 'Also, Sushma aunty called my mom. She suspects something.', time: '11:05 AM' },
+          { date: 'Today', side: 'in', text: 'I covered for you, told her we were studying at the library till late. She bought it.', time: '11:06 AM' },
+          { date: 'Today', side: 'in', text: 'You owe me a KitKat. Love you loser. ❤️', time: '11:10 AM' }
+      ]},
+      'jithin': { unread: 0, messages: [
+          { date: '2 Days Ago', side: 'out', text: 'Dude, I cannot focus.', time: '11:00 PM' },
+          { date: '2 Days Ago', side: 'in', text: 'Why? Riya again?', time: '11:05 PM' },
+          { date: '2 Days Ago', side: 'out', text: 'No. Not her. She is annoying.', time: '11:06 PM' },
+          { date: 'Yesterday', side: 'out', text: 'I wrote something for HER. Listen.', time: '01:00 AM' },
+          { date: 'Yesterday', side: 'in', text: 'Spit it out, Romeo.', time: '01:05 AM' },
+          { date: 'Yesterday', side: 'out', text: 'In the library silence, she steals the light,\nA quiet artist in the dead of night.\nNo loud laughter, just a gentle check,\nShe wears the STARS around her neck.\nMy heart beats faster, a dangerous drum,\nWaiting for the moment she will come.', time: '01:10 AM' },
+          { date: 'Yesterday', side: 'in', text: 'Bro... that is deep. Does she know?', time: '01:15 AM' },
+          { date: 'Yesterday', side: 'out', text: 'Not yet. I bought the gift though.', time: '01:20 AM' },
+          { date: 'Yesterday', side: 'in', text: 'Give it to her tomorrow. Don\'t be a coward.', time: '01:25 AM' }
+      ]},
+      'arjun': { unread: 0, messages: [
+          { date: 'Yesterday', side: 'in', text: 'Bestie, are we spiraling? You left the group chat early.', time: '09:00 PM' },
+          { date: 'Yesterday', side: 'out', text: 'Anxious. Amma is getting suspicious about the mall trip.', time: '09:05 PM' },
+          { date: 'Yesterday', side: 'in', text: 'Ugh, the drama of it all! 🙄 Honey, listen to me.', time: '09:10 PM' },
+          { date: 'Yesterday', side: 'in', text: 'You are a star (literally, with that pendant). Don\'t let them dim your shine.', time: '09:12 PM' },
+          { date: 'Yesterday', side: 'in', text: 'If Sushma Aunty tries anything, I will read her to filth. Her saree game is weak anyway. Period.', time: '09:15 PM' },
+          { date: 'Today', side: 'in', text: 'Spill the tea later? I have news about the new math sir. ☕✨', time: '10:00 AM' },
+          { date: 'Today', side: 'in', text: 'And wear that blue shirt, it makes you look less dead inside. 😘', time: '10:05 AM' }
+      ]},
+      'family_grp': { isGroup: true, unread: 0, messages: [
+          { date: 'Yesterday', side: 'in', sender: 'Dad', text: 'Electricity bill paid.', time: '10:00 AM' },
+          { date: 'Yesterday', side: 'in', sender: 'Mom', text: 'Ok.', time: '10:05 AM' },
+          { date: 'Today', side: 'in', sender: 'Sandra', text: 'Vikram ettayi, mom is angry.', time: '09:00 AM' },
+          { date: 'Today', side: 'in', sender: 'Sandra', text: 'Better come home early.', time: '09:05 AM' }
+      ]},
+      'proj_grp': { isGroup: true, unread: 0, messages: [
+          { date: 'Yesterday', side: 'in', sender: 'Rohit', text: 'Did we finish the circuit diagram?', time: '08:00 PM' },
+          { date: 'Yesterday', side: 'in', sender: 'Kiran', text: 'I am doing it now.', time: '08:15 PM' },
+          { date: 'Today', side: 'in', sender: 'Abhijith', text: 'Record submission date changed.', time: '09:00 AM' },
+          { date: 'Today', side: 'in', sender: 'Rohit', text: 'Friday.', time: '10:00 AM' },
+          { date: 'Today', side: 'in', sender: 'Rohit', text: 'Btw Vik, did you finally give that gift to **Project Ash**? Or still scared?', time: '10:05 AM' },
+          { date: 'Today', side: 'in', sender: 'Kiran', text: 'Ooooh Project Ash.', time: '10:07 AM' },
+          { date: 'Today', side: 'in', sender: 'Vishnu', text: 'Leave him alone.', time: '10:10 AM' },
+          { date: 'Today', side: 'out', text: 'Shut up guys. Not here.', time: '10:15 AM' }
+      ]},
+      'mommy': { unread: 1, messages: [
+          { date: 'Today', side: 'in', text: 'Vikram, did you eat?', time: '01:00 PM' },
+          { date: 'Today', side: 'in', text: 'Pick up the phone.', time: '01:05 PM' },
+          { date: 'Today', side: 'out', text: 'In class ma.', time: '01:10 PM' },
+          { date: 'Today', side: 'in', text: 'Who is this girl calling our landline?', time: '01:15 PM' },
+          { date: 'Today', side: 'in', text: 'She asked for you.', time: '01:16 PM' },
+          { date: 'Today', side: 'in', text: 'Sushma Aunty said she saw you at the mall.', time: '02:00 PM' },
+          { date: 'Today', side: 'in', text: 'With a girl in a white Kurta. Who is she?', time: '02:05 PM' }
       ]},
       'class_grp': { isGroup: true, unread: 0, messages: [
           { date: 'Yesterday', side: 'in', sender: 'Adithya', text: 'Can someone send the notes?', time: '08:00 AM' },
@@ -382,74 +421,29 @@
           { date: 'Today', side: 'in', sender: 'HOD', type: 'image', src: 'assets/chat/class_sched.png', text: 'Schedule for Disciplinary Meet', time: '10:00 AM' },
           { date: 'Today', side: 'in', sender: 'Adithya', text: 'Is the lab open today?', time: '12:00 PM' }
       ]},
-      'jithin': { unread: 0, messages: [
-          { date: '2 Days Ago', side: 'out', text: 'Dude, I cannot focus.', time: '11:00 PM' },
-          { date: '2 Days Ago', side: 'in', text: 'Why? Neha again?', time: '11:05 PM' },
-          { date: '2 Days Ago', side: 'out', text: 'No. Not her. She is annoying.', time: '11:06 PM' },
-          { date: 'Yesterday', side: 'out', text: 'I wrote something for HER. Listen.', time: '01:00 AM' },
-          { date: 'Yesterday', side: 'in', text: 'Spit it out, Romeo.', time: '01:05 AM' },
-          { date: 'Yesterday', side: 'out', text: 'In the library silence, she steals the light,\nA quiet artist in the dead of night.\nNo loud laughter, just a gentle check,\nShe wears the STARS around her neck.\nMy heart beats faster, a dangerous drum,\nWaiting for the moment she will come.', time: '01:10 AM' },
-          { date: 'Yesterday', side: 'in', text: 'Bro... that is deep. Does she know?', time: '01:15 AM' },
-          { date: 'Yesterday', side: 'out', text: 'Not yet. I bought the gift though.', time: '01:20 AM' },
-          { date: 'Yesterday', side: 'in', text: 'Give it to her tomorrow. Don\'t be a coward.', time: '01:25 AM' }
-      ]},
-      'bestie': { unread: 0, messages: [
-          { date: 'Yesterday', side: 'in', text: 'Did you submit the record?', time: '04:00 PM' },
-          { date: 'Yesterday', side: 'out', text: 'Yes. Finally.', time: '04:05 PM' },
-          { date: 'Yesterday', side: 'out', text: 'I hate my parents sometimes.', time: '08:00 PM' },
-          { date: 'Yesterday', side: 'in', text: 'Come over. We can sit on the roof and talk. I\'ll steal snacks.', time: '08:05 PM' },
-          { date: 'Yesterday', side: 'out', text: 'Thanks Anju. You are the best.', time: '08:10 PM' },
-          { date: 'Today', side: 'in', type: 'image', src: 'assets/chat/canteen.png', text: 'Canteen?? Come fast. They made puffs.', time: '11:00 AM' },
-          { date: 'Today', side: 'in', text: 'Also, Lissy aunty called my mom. She suspects something.', time: '11:05 AM' },
-          { date: 'Today', side: 'in', text: 'I covered for you, told her we were studying at the library till late. She bought it.', time: '11:06 AM' },
-          { date: 'Today', side: 'in', text: 'You owe me a KitKat. Love you loser. ❤️', time: '11:10 AM' }
-      ]},
-      'arjun': { unread: 0, messages: [
-          { date: 'Yesterday', side: 'in', text: 'Bestie, are we spiraling? You left the group chat early.', time: '09:00 PM' },
-          { date: 'Yesterday', side: 'out', text: 'Anxious. My mom is getting suspicious about the mall trip.', time: '09:05 PM' },
-          { date: 'Yesterday', side: 'in', text: 'Ugh, the drama of it all! 🙄 Honey, listen to me.', time: '09:10 PM' },
-          { date: 'Yesterday', side: 'in', text: 'You are a star (literally, with that pendant). Don\'t let them dim your shine.', time: '09:12 PM' },
-          { date: 'Yesterday', side: 'in', text: 'If Lissy Aunty tries anything, I will read her to filth. Her saree game is weak anyway. Period.', time: '09:15 PM' },
-          { date: 'Today', side: 'in', text: 'Spill the tea later? I have news about the new math sir. ☕✨', time: '10:00 AM' },
-          { date: 'Today', side: 'in', text: 'And wear that blue shirt, it makes you look less dead inside. 😘', time: '10:05 AM' }
+      'swiggy': { unread: 0, messages: [
+          { date: 'Today', side: 'in', text: 'Your order is being prepared.', time: '12:30 PM' },
+          { date: 'Today', side: 'in', text: 'Enjoy your Biryani!', time: '01:15 PM' }
       ]},
       'amazon': { unread: 1, messages: [
           { date: 'Last Week', side: 'in', text: 'Your order "Gaming Mouse" has been delivered.', time: '02:00 PM' },
-          { date: 'Yesterday', side: 'in', text: 'Out for Delivery: Order #404-992.', time: '09:00 AM' },
-          { date: 'Yesterday', side: 'in', type: 'image', src: 'assets/chat/star_pendant.png', text: 'Delivered: "Starry Night Pendant (Silver)".', time: '05:00 PM' },
-          { date: 'Today', side: 'in', text: 'Gift Note updated: "To my shining Star. Happy Birthday." - Printed.', time: '09:00 AM' }
-      ]},
-      'mommy': { unread: 1, messages: [
-          { date: 'Today', side: 'in', text: 'Rahul, did you eat?', time: '01:00 PM' },
-          { date: 'Today', side: 'in', text: 'Pick up the phone.', time: '01:05 PM' },
-          { date: 'Today', side: 'out', text: 'In class ma.', time: '01:10 PM' },
-          { date: 'Today', side: 'in', text: 'Who is this girl calling our landline?', time: '01:15 PM' },
-          { date: 'Today', side: 'in', text: 'She asked for you.', time: '01:16 PM' },
-          { date: 'Today', side: 'in', text: 'Lissy Aunty said she saw you at the mall.', time: '02:00 PM' },
-          { date: 'Today', side: 'in', text: 'With a girl in a white Kurta. Who is she?', time: '02:05 PM' }
+          { date: 'Yesterday', side: 'in', text: 'Great Indian Festival Sale is live! Up to 80% off.', time: '09:00 AM' },
+          { date: 'Yesterday', side: 'in', text: 'Your order "Wireless Headphones" delivered.', time: '05:00 PM' },
+          { date: 'Today', side: 'in', text: 'Gift delivery update: Package for **Aishwarya** has been delivered. Item: "Classic Notebook".', time: '09:00 AM' }
       ]},
       'aunt_lissy': { unread: 1, messages: [
-          { date: 'Yesterday', side: 'in', text: 'Rahul mone, I saw you at the mall.', time: '05:30 PM' },
+          { date: 'Yesterday', side: 'in', text: 'Vikram mone, I saw you at the mall.', time: '05:30 PM' },
           { date: 'Yesterday', side: 'in', text: 'You didn\'t see me? You were too busy talking to that girl.', time: '05:35 PM' },
           { date: 'Today', side: 'in', text: 'Does your mother know you have a girlfriend?', time: '10:00 AM' },
           { date: 'Today', side: 'in', text: 'I think I should call her.', time: '10:05 AM' }
       ]},
-      'family_grp': { isGroup: true, unread: 0, messages: [
-          { date: 'Yesterday', side: 'in', sender: 'Dad', text: 'Electricity bill paid.', time: '10:00 AM' },
-          { date: 'Yesterday', side: 'in', sender: 'Mom', text: 'Ok.', time: '10:05 AM' },
-          { date: 'Today', side: 'in', sender: 'Sandra', text: 'Rahul ettayi, mom is angry.', time: '09:00 AM' },
-          { date: 'Today', side: 'in', sender: 'Sandra', text: 'Better come home early.', time: '09:05 AM' }
+      'cousin_s': { unread: 0, messages: [
+          { date: 'Last Week', side: 'in', text: 'Mom is asking about your grades.', time: '10:00 AM' },
+          { date: 'Last Week', side: 'out', text: 'Tell her I am studying.', time: '10:05 AM' }
       ]},
-      'proj_grp': { isGroup: true, unread: 0, messages: [
-          { date: 'Yesterday', side: 'in', sender: 'Rohit', text: 'Did we finish the circuit diagram?', time: '08:00 PM' },
-          { date: 'Yesterday', side: 'in', sender: 'Kiran', text: 'I am doing it now.', time: '08:15 PM' },
-          { date: 'Today', side: 'in', sender: 'Abhijith', text: 'Record submission date changed.', time: '09:00 AM' },
-          { date: 'Today', side: 'in', sender: 'Rohit', text: 'Friday.', time: '10:00 AM' },
-          // THE KEY CLUE (Buried in project talk)
-          { date: 'Today', side: 'in', sender: 'Rohit', text: 'Btw Rahul, did you finally give that "Star" pendant to Gopika? Or still scared?', time: '10:05 AM' },
-          { date: 'Today', side: 'in', sender: 'Kiran', text: 'Focus on the project guys.', time: '10:07 AM' },
-          { date: 'Today', side: 'in', sender: 'Vishnu', text: 'Leave him alone.', time: '10:10 AM' },
-          { date: 'Today', side: 'out', text: 'Shut up guys. Not here.', time: '10:15 AM' }
+      'kiran': { unread: 0, messages: [
+          { date: 'Yesterday', side: 'in', text: 'Turf booked for 7 PM.', time: '02:00 PM' },
+          { date: 'Yesterday', side: 'out', text: 'Coming.', time: '02:05 PM' }
       ]},
       'unknown1': { unread: 0, messages: [
           { date: 'Yesterday', side: 'in', text: 'Is this the Olx guy?', time: '10:00 AM' },
@@ -457,18 +451,6 @@
       ]},
       'unknown2': { unread: 1, messages: [
           { date: 'Today', side: 'in', text: 'Earn ₹5000/day working from home! Click link.', time: '09:00 AM' }
-      ]},
-      'kiran': { unread: 0, messages: [
-          { date: 'Yesterday', side: 'in', text: 'Turf booked for 7 PM.', time: '02:00 PM' },
-          { date: 'Yesterday', side: 'out', text: 'Coming.', time: '02:05 PM' }
-      ]},
-      'swiggy': { unread: 0, messages: [
-          { date: 'Today', side: 'in', text: 'Your order is being prepared.', time: '12:30 PM' },
-          { date: 'Today', side: 'in', text: 'Enjoy your Biryani!', time: '01:15 PM' }
-      ]},
-      'cousin_s': { unread: 0, messages: [
-          { date: 'Last Week', side: 'in', text: 'Mom is asking about your grades.', time: '10:00 AM' },
-          { date: 'Last Week', side: 'out', text: 'Tell her I am studying.', time: '10:05 AM' }
       ]},
       'hr_intern': { unread: 0, messages: [
           { date: 'Last Month', side: 'in', text: 'Application received for Python Dev Intern.', time: '10:00 AM' },
@@ -494,8 +476,8 @@
     let cipherMap = {};
     let isDevDecrypted = false;
     let statusTimeout = null;
-    let solvedCiphers = {}; // { chatId: Set() }
-    let letterLockouts = {}; // { char: timestamp }
+    let solvedCiphers = {}; 
+    let letterLockouts = {}; 
     let lockoutInterval = null;
     let currentSolveChar = null;
     let lastSeenCache = {}; 
@@ -514,21 +496,16 @@
 
     generateKey();
 
-    function toggleDevDecrypt() {
-        isDevDecrypted = !isDevDecrypted;
-        const btn = document.querySelector('button[onclick="toggleDevDecrypt()"]');
-        if(isDevDecrypted) {
-            btn.innerText = "🔒 DEV: RE-ENCRYPT";
-            btn.classList.remove('bg-red-600', 'hover:bg-red-700', 'border-red-400');
-            btn.classList.add('bg-green-600', 'hover:bg-green-700', 'border-green-400');
-        } else {
-            btn.innerText = "🛠️ DEV: DECRYPT";
-            btn.classList.add('bg-red-600', 'hover:bg-red-700', 'border-red-400');
-            btn.classList.remove('bg-green-600', 'hover:bg-green-700', 'border-green-400');
+    function enterGame() {
+        document.getElementById('start-overlay').classList.add('hidden');
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
         }
         renderChatList();
-        if(currentChatId) loadChat(currentChatId);
-        renderStatus();
+    }
+
+    function toggleDevDecrypt() {
+        // Disabled for production
     }
 
     function applyCipher(text, contextId) {
@@ -541,14 +518,13 @@
         for (let i = 0; i < text.length; i++) {
             const realChar = text[i];
             
-            // Strictly check for letters. Pass through everything else.
+            // Only scramble letters A-Z
             if (!/[a-zA-Z]/.test(realChar)) {
                 resultHtml += realChar;
                 continue;
             }
 
             const cipherChar = cipherMap[realChar];
-            // Safety check if generation failed somehow or char matches regex but not in map
             if (!cipherChar) {
                 resultHtml += realChar;
                 continue;
@@ -561,7 +537,6 @@
             } else {
                 if (contextId) {
                     const lockClass = isLocked ? 'locked' : '';
-                    // Escape just in case, though cipher chars are just letters
                     const safeCipher = cipherChar.replace("'", "\\'"); 
                     resultHtml += `<span class="cipher-char ${lockClass}" onclick="event.stopPropagation(); openSolver('${safeCipher}')">${cipherChar}</span>`;
                 } else {
@@ -651,27 +626,57 @@
         }
 
         if (guess === correctRealChar.toUpperCase()) {
-            if (!solvedCiphers[currentChatId]) {
-                solvedCiphers[currentChatId] = new Set();
+            // Determine active context ID (Chat, Status, or Calls)
+            let activeContext = currentChatId;
+            const statusView = document.getElementById('view-status');
+            const callsView = document.getElementById('view-calls');
+            
+            // If status modal is open, use 'status' context
+            if (!document.getElementById('status-modal').classList.contains('hidden')) {
+                activeContext = 'status';
+            } 
+            // If just in calls tab
+            else if (!callsView.classList.contains('hidden')) {
+                activeContext = 'calls';
+            }
+
+            if (!solvedCiphers[activeContext]) {
+                solvedCiphers[activeContext] = new Set();
             }
             
             const lowerCipher = currentSolveChar.toLowerCase();
             const upperCipher = currentSolveChar.toUpperCase();
             
-            solvedCiphers[currentChatId].add(lowerCipher);
-            solvedCiphers[currentChatId].add(upperCipher);
+            solvedCiphers[activeContext].add(lowerCipher);
+            solvedCiphers[activeContext].add(upperCipher);
+            
+            // SIDEBAR SYNC: Check if this letter solved anything for sidebar names
+            Object.keys(chatData).forEach(key => {
+               if(!solvedCiphers[key]) solvedCiphers[key] = new Set();
+               if(key === activeContext) {
+                   // This is where we ensure solving inside chat updates the sidebar name for THAT chat
+                   solvedCiphers[key].add(lowerCipher);
+                   solvedCiphers[key].add(upperCipher);
+               }
+            });
             
             document.getElementById('solver-msg').className = "text-xs h-4 mb-4 text-center text-green-400";
             document.getElementById('solver-msg').innerText = "Correct! Decrypting...";
             
             setTimeout(() => {
                 closeSolver();
-                if(currentChatId) loadChat(currentChatId);
-                // Trigger header update immediately
-                const headerName = document.getElementById('header-name');
-                if (headerName && currentChatId) {
-                    const contact = getContact(currentChatId);
-                    headerName.innerHTML = applyCipher(contact.name, currentChatId);
+                // Refresh views based on active context
+                if (activeContext === 'status') {
+                    const caption = document.getElementById('status-caption');
+                    const rawText = caption.getAttribute('data-raw'); 
+                    if(rawText) caption.innerHTML = applyCipher(rawText, 'status');
+                } else if (activeContext === 'calls') {
+                    renderCalls();
+                } else if (currentChatId) {
+                    // Update Chat Area
+                    loadChat(currentChatId);
+                    // Update Sidebar (Sidebar mirrors chat state for names)
+                    renderChatList();
                 }
             }, 800);
         } else {
@@ -714,15 +719,9 @@
         document.getElementById('key-modal').classList.add('hidden');
     }
 
-    function enterGame() {
-        document.getElementById('start-overlay').classList.add('hidden');
-        renderChatList();
-    }
-
     function getContact(key) {
         let contact = contactDB[key];
         if(!contact) contact = { name: 'Unknown', img: 'https://ui-avatars.com/api/?name=?', isGroup: false };
-        // Return raw contact data. Encryption happens in render.
         return { ...contact }; 
     }
 
@@ -737,8 +736,9 @@
             
             let rawText = lastMsg.type === 'image' ? '📷 Photo' : lastMsg.text;
             
-            let msgPreview = applyCipher(rawText, null); 
-            let namePreview = applyCipher(contact.name, null);
+            // Sidebar previews use the context of their specific chat ID to see if they should show as decrypted
+            let msgPreview = applyCipher(rawText, key); 
+            let namePreview = applyCipher(contact.name, key);
             
             let badgeHtml = data.unread > 0 ? `<div class="bg-wa-primary text-wa-bg text-[11px] h-5 w-5 flex items-center justify-center rounded-full font-bold">${data.unread}</div>` : '';
             
@@ -776,7 +776,7 @@
              <div class="flex items-center p-3 px-4 cursor-pointer hover:bg-wa-header transition" onclick="openStatus('${c.name}', '${db.statusImg}', '${db.statusText}')">
                 <img src="${c.img}" onerror="this.src='https://ui-avatars.com/api/?name=${c.name}'" class="w-12 h-12 rounded-full object-cover border-[2.5px] border-wa-primary p-[1px]">
                 <div class="ml-4">
-                    <div class="text-[17px] text-wa-text font-medium">${applyCipher(c.name, null)}</div>
+                    <div class="text-[17px] text-wa-text font-medium">${applyCipher(c.name, 'status')}</div>
                     <div class="text-[13px] text-wa-textSec">Today, 10:23 AM</div>
                 </div>
              </div>`;
@@ -846,7 +846,7 @@
                 
                 const dbKey = Object.keys(contactDB).find(key => contactDB[key].name === member);
                 if(dbKey) displayImg = contactDB[dbKey].img;
-                if(member.includes('Rahul')) displayImg = 'assets/pfp/rahul.png';
+                if(member.includes('Vikram')) displayImg = 'assets/pfp/rahul.png';
 
                 membersHtml += `
                 <div class="py-3 px-6 hover:bg-wa-header flex items-center cursor-pointer border-t border-wa-border">
@@ -879,6 +879,7 @@
         col2.classList.remove('hidden');
         col2.classList.add('flex');
         
+        // Use currentChatId as context to ensure updates reflect instantly
         document.getElementById('header-name').innerHTML = applyCipher(contact.name, currentChatId);
         document.getElementById('header-img').src = contact.img;
         
@@ -968,7 +969,11 @@
         
         document.getElementById('status-modal').classList.remove('hidden'); 
         document.getElementById('status-img-main').src = img; 
-        document.getElementById('status-caption').innerHTML = applyCipher(text || '', 'status');
+        
+        // Set raw attribute for later updating
+        const caption = document.getElementById('status-caption');
+        caption.setAttribute('data-raw', text);
+        caption.innerHTML = applyCipher(text || '', 'status');
     }
     
     function closeStatus() { 
